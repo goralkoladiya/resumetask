@@ -1,8 +1,6 @@
 import 'package:task/helper/db_helper.dart';
 import 'package:task/models/person.dart';
 import 'package:task/screens/new_person.dart';
-import 'package:task/screens/settings.dart';
-import 'package:task/utils/uidata.dart';
 import 'package:task/widgets/empty_view.dart';
 import 'package:task/widgets/person_card.dart';
 import 'package:task/widgets/profile_tile.dart';
@@ -109,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: <Widget>[
                   CircleAvatar(
                     radius: 30.0,
-                    backgroundImage: AssetImage("assets/avatars/rdj.png"),
+                    backgroundImage: AssetImage("assets/avatars/user.png"),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -205,7 +203,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void showAddDialog(BuildContext context) {
-    // set up the button
     Widget cancelButton = ElevatedButton(
       child: Text("Cancel"),
       onPressed: () {

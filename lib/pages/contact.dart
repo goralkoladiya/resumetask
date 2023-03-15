@@ -1,7 +1,6 @@
 import 'package:task/helper/db_helper.dart';
 import 'package:task/models/person.dart';
 import 'package:flutter/material.dart';
-import 'package:task/models/person.dart';
  
 
 class Contact extends StatefulWidget {

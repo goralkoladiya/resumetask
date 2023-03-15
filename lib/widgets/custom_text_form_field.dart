@@ -33,7 +33,7 @@ class CustomTextField extends StatelessWidget {
           maxLength: maxLength,
           maxLines: null,
           enabled: enabled,
-          controller: TextEditingController()..text = valueText!,
+          // controller: TextEditingController()..text = valueText!,
           decoration: InputDecoration(
             hintText: hintText,
             prefixIcon: iconText,

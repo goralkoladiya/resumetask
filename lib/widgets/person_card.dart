@@ -44,7 +44,7 @@ class _PersonCardState extends State<PersonCard> {
                   children: [
                     CircleAvatar(
                       radius: 30.0,
-                      backgroundImage: AssetImage("assets/avatars/rdj.png"),
+                      backgroundImage: AssetImage("assets/avatars/user.png"),
                     ),
                     SizedBox(width: 10.0),
                     Text(
@@ -60,7 +60,7 @@ class _PersonCardState extends State<PersonCard> {
                   padding: EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                     color: Colors.blueAccent,
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: InkWell(
                     onTap: () => convertToPdf(),
@@ -75,7 +75,7 @@ class _PersonCardState extends State<PersonCard> {
                 ),
               ],
             ),
-            SizedBox(height: 10.0),
+            SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -110,9 +110,10 @@ class _PersonCardState extends State<PersonCard> {
   }
 
   convertToPdf() async {
+    print("hello");
     if (await Permission.storage.request().isGranted) {
       savePdf();
-
+      //
       // Directory tempDir = await getTemporaryDirectory();
       // String tempPath = tempDir.path;
       // final File file =
@@ -123,7 +124,7 @@ class _PersonCardState extends State<PersonCard> {
         Permission.storage,
       ].request();
 
-      savePdf();
+      // savePdf();
     }
   }
 
@@ -135,17 +136,55 @@ class _PersonCardState extends State<PersonCard> {
           return pw.Column(
             children: [
               pw.Text(
-                widget.person!.firstName != null
-                    ? widget.person!.firstName
-                    : "FirstName" + " " + widget.person!.surname! != null
-                    ? widget.person!.surname
-                    : "LastName",
+                "${"FirstName" + " :" + widget.person!.firstName! +" " + widget.person!.surname!}",
                 style: pw.TextStyle(
                   fontSize: 20.0,
                   fontWeight: pw.FontWeight.bold,
                 ),
               ),
               pw.Divider(indent: 10, endIndent: 10),
+              pw.Text(
+                "${"Address" + " :" + widget.person!.address!}",
+                style: pw.TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
+              pw.Text(
+                "${"About" + " :" + widget.person!.aboutMe!}",
+                style: pw.TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
+              pw.Text(
+                "${"Contact" + " :" + widget.person!.phone!}",
+                style: pw.TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
+              pw.Text(
+                "${"Address" + " :" + widget.person!.address!}",
+                style: pw.TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
+              pw.Text(
+                "${"City" + " :" + widget.person!.city!}",
+                style: pw.TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
+              pw.Text(
+                "${"Country" + " :" + widget.person!.country!}",
+                style: pw.TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
             ],
           ); // Center
         },
@@ -156,26 +195,8 @@ class _PersonCardState extends State<PersonCard> {
   }
 
   showGiveNameDialog(BuildContext context) {
-    String? name;
-    // set up the button
-    Widget okButton = TextButton(
-      child: Text("Save"),
-      onPressed: () async {
-        final File file = File("/storage/emulated/0/Download/$name.pdf");
-        await file.writeAsBytes(pdf.save());
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("PDF Saved"),
-        ));
-      },
-    );
+    String name= DateTime.now().toString();
 
-    Widget cancelButton = TextButton(
-      child: Text("Cancel"),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
@@ -194,7 +215,22 @@ class _PersonCardState extends State<PersonCard> {
           hintText: widget.person!.title,
         ),
       ),
-      actions: [okButton, cancelButton],
+      actions: [TextButton(
+        child: Text("Save"),
+        onPressed: () async {
+          final File file = File("/storage/emulated/0/Download/$name.pdf");
+          await file.writeAsBytes(pdf.save() as List<int>);
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("PDF Saved"),
+          ));
+        },
+      ), TextButton(
+        child: Text("Cancel"),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      )],
     );
 
     // show the dialog
@@ -207,34 +243,6 @@ class _PersonCardState extends State<PersonCard> {
   }
 
   showTitleUpdateDialog(BuildContext context) {
-    // set up the button
-    Widget okButton = TextButton(
-      child: Text("Update"),
-      onPressed: () async {
-        await dbHelper.updateTitle(widget.person!.id!, titleController.text);
-        Navigator.pop(context);
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Profile title"),
-      content: TextFormField(
-        autofocus: true,
-        controller: titleController..text = title!,
-        decoration: InputDecoration(
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.blue),
-          ),
-          hintText: "New title",
-        ),
-        keyboardType: TextInputType.text,
-      ),
-      actions: [
-        okButton,
-      ],
-    );
-
     // show the dialog
     showDialog(
       context: context,
@@ -244,7 +252,29 @@ class _PersonCardState extends State<PersonCard> {
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setState) {
-            return alert;
+            return AlertDialog(
+              title: Text("Profile title"),
+              content: TextFormField(
+                autofocus: true,
+                controller: titleController..text = title!,
+                decoration: InputDecoration(
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue),
+                  ),
+                  hintText: "New title",
+                ),
+                keyboardType: TextInputType.text,
+              ),
+              actions: [
+                TextButton(
+                  child: Text("Update"),
+                  onPressed: () async {
+                    await dbHelper.updateTitle(widget.person!.id!, titleController.text);
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            );
           },
         );
       },

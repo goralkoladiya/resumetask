@@ -1,4 +1,4 @@
-import 'package:task/models/education.dart';
+
 import 'package:task/models/person.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -12,15 +12,8 @@ class DBHelper {
             "CREATE TABLE persons(id INTEGER PRIMARY KEY, title TEXT, firstName TEXT,"
             "surname TEXT, jobTitle TEXT, aboutMe TEXT, gender TEXT, dob TEXT, nationality TEXT,"
             "country TEXT, city TEXT, creationDateTime TEXT, phone TEXT, email TEXT,"
-            "address TEXT, linkedin TEXT, facebook TEXT, github TEXT)");
+            "address TEXT)");
 
-        // await db.execute(
-        //     "CREATE TABLE education(id INTEGER PRIMARY KEY, years TEXT, school TEXT, faculty TEXT,"
-        //         "department TEXT, grade TEXT, notes TEXT)");
-
-        // await db.execute(
-        //     "CREATE TABLE experience(id INTEGER PRIMARY KEY, years TEXT, school TEXT, faculty TEXT,"
-        //         "department TEXT, grade TEXT, notes TEXT)");
 
       },
       version: 1,
@@ -40,17 +33,7 @@ class DBHelper {
     return personId;
   }
 
-  Future<int> insertEducation(Education education) async {
-    int educationId = 0;
-    Database db = await database();
-    await db
-        .insert('education', education.toMap(),
-            conflictAlgorithm: ConflictAlgorithm.replace)
-        .then((value) {
-      educationId = value;
-    });
-    return educationId;
-  }
+
 
   Future<List<Person>> getPersons() async {
     // Get a reference to the database.
@@ -112,14 +95,11 @@ class DBHelper {
     String phone,
     String email,
     String address,
-    String linkedin,
-    String facebook,
-    String github,
+
   ) async {
     Database db = await database();
     await db.rawUpdate(
-        "update persons set phone = '$phone', email = '$email', address = '$address',"
-        "linkedin = '$linkedin', facebook = '$facebook', github = '$github' where id = '$id'");
+        "update persons set phone = '$phone', email = '$email', address = '$address' where id = '$id'");
     print("Updated");
   }
 

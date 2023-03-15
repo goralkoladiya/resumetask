@@ -1,11 +1,11 @@
-import 'package:resumetask/helper/db_helper.dart';
-import 'package:resumetask/models/person.dart';
-import 'package:resumetask/screens/new_person.dart';
-import 'package:resumetask/screens/settings.dart';
-import 'package:resumetask/utils/uidata.dart';
-import 'package:resumetask/widgets/empty_view.dart';
-import 'package:resumetask/widgets/person_card.dart';
-import 'package:resumetask/widgets/profile_tile.dart';
+import 'package:task/helper/db_helper.dart';
+import 'package:task/models/person.dart';
+import 'package:task/screens/new_person.dart';
+import 'package:task/screens/settings.dart';
+import 'package:task/utils/uidata.dart';
+import 'package:task/widgets/empty_view.dart';
+import 'package:task/widgets/person_card.dart';
+import 'package:task/widgets/profile_tile.dart';
 import 'package:flutter/material.dart';
  
 

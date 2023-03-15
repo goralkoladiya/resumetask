@@ -1,5 +1,5 @@
-import 'package:resumetask/models/education.dart';
-import 'package:resumetask/models/person.dart';
+import 'package:task/models/education.dart';
+import 'package:task/models/person.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:resumetask/helper/db_helper.dart';
-import 'package:resumetask/models/person.dart';
+import 'package:task/helper/db_helper.dart';
+import 'package:task/models/person.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';

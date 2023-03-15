@@ -1,9 +1,9 @@
-import 'package:resumetask/helper/db_helper.dart';
-import 'package:resumetask/models/person.dart';
-import 'package:resumetask/pages/education.dart';
-import 'package:resumetask/pages/expertise.dart';
-import 'package:resumetask/pages/portfolio.dart';
-import 'package:resumetask/pages/reference.dart';
+import 'package:task/helper/db_helper.dart';
+import 'package:task/models/person.dart';
+import 'package:task/pages/education.dart';
+import 'package:task/pages/expertise.dart';
+import 'package:task/pages/portfolio.dart';
+import 'package:task/pages/reference.dart';
 import 'package:flutter/material.dart';
 
 import '../models/person.dart';

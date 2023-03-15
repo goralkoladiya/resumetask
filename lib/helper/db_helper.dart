@@ -56,9 +56,6 @@ class DBHelper {
         phone: personMap[i]['phone'],
         email: personMap[i]['email'],
         address: personMap[i]['address'],
-        linkedin: personMap[i]['linkedin'],
-        facebook: personMap[i]['facebook'],
-        github: personMap[i]['github'],
       );
     });
   }

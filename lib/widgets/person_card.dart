@@ -57,6 +57,8 @@ class _PersonCardState extends State<PersonCard> {
                   ],
                 ),
                 Container(
+                  height: 60,
+                  alignment: Alignment.center,
                   padding: EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                     color: Colors.blueAccent,
@@ -113,12 +115,6 @@ class _PersonCardState extends State<PersonCard> {
     print("hello");
     if (await Permission.storage.request().isGranted) {
       savePdf();
-      //
-      // Directory tempDir = await getTemporaryDirectory();
-      // String tempPath = tempDir.path;
-      // final File file =
-      //     File("/storage/emulated/0/Download/${widget.person.title}.pdf");
-      // await file.writeAsBytes(pdf.save());
     } else {
       Map<Permission, PermissionStatus> statuses = await [
         Permission.storage,
@@ -129,69 +125,81 @@ class _PersonCardState extends State<PersonCard> {
   }
 
   savePdf() {
-    pdf.addPage(
-      pw.Page(
-        pageFormat: PdfPageFormat.a4,
-        build: (pw.Context context) {
-          return pw.Column(
-            children: [
-              pw.Text(
-                "${"FirstName" + " :" + widget.person!.firstName! +" " + widget.person!.surname!}",
-                style: pw.TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: pw.FontWeight.bold,
-                ),
-              ),
-              pw.Divider(indent: 10, endIndent: 10),
-              pw.Text(
-                "${"Address" + " :" + widget.person!.address!}",
-                style: pw.TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: pw.FontWeight.bold,
-                ),
-              ),
-              pw.Text(
-                "${"About" + " :" + widget.person!.aboutMe!}",
-                style: pw.TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: pw.FontWeight.bold,
-                ),
-              ),
-              pw.Text(
-                "${"Contact" + " :" + widget.person!.phone!}",
-                style: pw.TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: pw.FontWeight.bold,
-                ),
-              ),
-              pw.Text(
-                "${"Address" + " :" + widget.person!.address!}",
-                style: pw.TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: pw.FontWeight.bold,
-                ),
-              ),
-              pw.Text(
-                "${"City" + " :" + widget.person!.city!}",
-                style: pw.TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: pw.FontWeight.bold,
-                ),
-              ),
-              pw.Text(
-                "${"Country" + " :" + widget.person!.country!}",
-                style: pw.TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: pw.FontWeight.bold,
-                ),
-              ),
-            ],
-          ); // Center
-        },
-      ),
-    );
+    if(widget.person!.firstName!=null && widget.person!.surname!=null && widget.person!.address!=null &&
+        widget.person!.address!=null && widget.person!.aboutMe!=null && widget.person!.phone!=null &&
+        widget.person!.country!=null && widget.person!.city!=null )
+      {
+        pdf.addPage(
+          pw.Page(
+            pageFormat: PdfPageFormat.a4,
+            build: (pw.Context context) {
+              return pw.Column(
+                children: [
+                  pw.Text(
+                    "${"FirstName" + " :" + widget.person!.firstName! +" " + widget.person!.surname!}",
+                    style: pw.TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                  ),
+                  pw.Divider(indent: 10, endIndent: 10),
+                  pw.Text(
+                    "${"Address" + " :" + widget.person!.address!}",
+                    style: pw.TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                  ),
+                  pw.Text(
+                    "${"About" + " :" + widget.person!.aboutMe!}",
+                    style: pw.TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                  ),
+                  pw.Text(
+                    "${"Contact" + " :" + widget.person!.phone!}",
+                    style: pw.TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                  ),
+                  pw.Text(
+                    "${"Address" + " :" + widget.person!.address!}",
+                    style: pw.TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                  ),
+                  pw.Text(
+                    "${"City" + " :" + widget.person!.city!}",
+                    style: pw.TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                  ),
+                  pw.Text(
+                    "${"Country" + " :" + widget.person!.country!}",
+                    style: pw.TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ); // Center
+            },
+          ),
+        );
+        showGiveNameDialog(context);
+      }
+    else
+      {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            duration: const Duration(seconds: 3),
+            content: Text('Details are not filled')));
+      }
 
-    showGiveNameDialog(context);
+
   }
 
   showGiveNameDialog(BuildContext context) {
@@ -219,7 +227,7 @@ class _PersonCardState extends State<PersonCard> {
         child: Text("Save"),
         onPressed: () async {
           final File file = File("/storage/emulated/0/Download/$name.pdf");
-          await file.writeAsBytes(pdf.save() as List<int>);
+          await file.writeAsBytes(await pdf.save());
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text("PDF Saved"),

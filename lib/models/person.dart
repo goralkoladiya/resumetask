@@ -12,9 +12,6 @@ class Person {
   String? phone;
   String? email;
   String? address;
-  String? linkedin;
-  String? facebook;
-  String? github;
 
   Person({
     this.id,
@@ -30,9 +27,6 @@ class Person {
     this.phone,
     this.email,
     this.address,
-    this.linkedin,
-    this.facebook,
-    this.github,
   });
 
   Map<String, dynamic> toMap() {
@@ -50,9 +44,6 @@ class Person {
       "phone": phone,
       "email": email,
       "address": address,
-      "linkedin": linkedin,
-      "facebook": facebook,
-      "github": github,
     };
   }
 }
